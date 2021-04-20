@@ -1,2 +1,3 @@
 # SeleniumAutoLoginApp
-C#  Selenium ile web sitesi login testi
+C# dilinde Selenium ile web sitesine otomatik login testi.
+(Login olunmak istenen sitenin adresini kod içerisinde yazabilirsiniz, URL kısmıda input alanından girilebilir hale getirilicektir.)
