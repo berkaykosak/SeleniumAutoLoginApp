@@ -21,8 +21,6 @@ namespace SeleniumLoginTestApp
             InitializeComponent();
         }
 
-        string link = @"giris_yapilacak_site_linki";
-        string basariliGirisLink = @"giris_yapildiktan_sonra_sitenin_acilan_linki"; //Bu alanı loginden sonra işlemin başarılı olup olmadığı uyarısında kullanıcaz.
         FirefoxDriver driver;
         Thread thread;
 
@@ -54,16 +52,17 @@ namespace SeleniumLoginTestApp
             Login_btn.ForeColor = Color.Gold;
             Login_btn.UseWaitCursor = true;
             Login_btn.Text = "Giriş yapılıyor...";
-            SeleniumBaslat();
+            SeleniumBaslat(siteURL_txtBox.Text);
             Thread.Sleep(3000);
             GirisYap(kullaniciAdi_txtBox.Text, sifre_TxtBox.Text);
 
-            if (GirisYapildiMiKontrol())
+            if (GirisYapildiMiKontrol(loginSonrasiURL_txtBox.Text))
             {
                 MessageBox.Show("GİRİŞ BAŞARILI","BİLGİ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 Login_btn.ForeColor = Color.Green;
                 Login_btn.UseWaitCursor = false;
                 Login_btn.Text = "GİRİŞ BAŞARILI !";
+          
             }
             else
             {
@@ -93,9 +92,10 @@ namespace SeleniumLoginTestApp
             }
             
         }
-        private bool GirisYapildiMiKontrol()
+
+        private bool GirisYapildiMiKontrol(string girisSonrasiURL)
         {
-            if (driver.Url == basariliGirisLink)
+            if (driver.Url == girisSonrasiURL)
             {
                 return true;
             }
@@ -104,12 +104,12 @@ namespace SeleniumLoginTestApp
                 return false;
             }
         }
-        private void SeleniumBaslat()
+        private void SeleniumBaslat(string siteLinki)
         {
             FirefoxDriverService servis = FirefoxDriverService.CreateDefaultService();
             servis.HideCommandPromptWindow = true; // konsolu gizleriz.
             driver = new FirefoxDriver(servis);
-            driver.Navigate().GoToUrl(link);
+            driver.Navigate().GoToUrl(siteLinki);
         }
 
         private void SeleniumKapat()
@@ -126,9 +126,5 @@ namespace SeleniumLoginTestApp
             SeleniumKapat();
         }
 
-        private void LoginTestApp_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
